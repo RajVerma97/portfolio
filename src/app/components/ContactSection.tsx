@@ -18,9 +18,9 @@ export default function ContactSection() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-gray-900 flex flex-col items-center justify-center p-4">
+    <div className="w-full min-h-screen  flex flex-col items-center justify-center p-4">
       <motion.div
-        className="max-w-md w-full bg-gray-800 p-8 rounded-lg shadow-lg"
+        className="max-w-md w-full  p-8 rounded-lg shadow-lg"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}

@@ -76,3 +76,15 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+body {
+  background-color: black;
+}
+
+.linear-gradient-green {
+  background: linear-gradient(to right, rgb(74, 222, 128), rgb(6, 182, 212));
+}
+
+.linear-gradient-pink {
+  background: linear-gradient(rgb(255, 28, 247), rgb(178, 73, 248));
+}

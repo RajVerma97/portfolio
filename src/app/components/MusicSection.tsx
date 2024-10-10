@@ -1,43 +1,55 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useState } from "react";
-import { Music } from "lucide-react";
+import MusicCard from "./MusicCard";
 
 export default function MusicSection() {
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const handleClick = () => {
-    setIsPlaying(!isPlaying);
-    // Here you would typically trigger audio playback
-  };
-
+  const songs = [
+    {
+      title: "Perfect",
+      artist: "Ed Sheeran",
+      album: "÷",
+      image: "/tu-hai-kahan.png",
+    },
+    {
+      title: "Sugar",
+      artist: "Maroon 5",
+      album: "Songs About Jane",
+      image: "perfect.png",
+    },
+    {
+      title: "Tuhaikahan",
+      artist: "Uraan",
+      album: "Tuhaikahan",
+      image: "/sugar.png",
+    },
+    {
+      title: "Tuhaikahan",
+      artist: "Uraan",
+      album: "Tuhaikahan",
+      image: "/sugar.png",
+    },
+  ];
   return (
-    <div className="w-full min-h-screen bg-gray-800 flex flex-col items-center justify-center p-4">
-      <motion.h2
-        className="text-4xl font-bold mb-8 text-white"
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-      >
-        My Music
-      </motion.h2>
-      <motion.div
-        className={`w-32 h-32 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center cursor-pointer`}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={handleClick}
-      >
-        <Music size={48} color="white" />
-      </motion.div>
-      <motion.p
-        className="text-xl text-white mt-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-      >
-        {isPlaying ? "Now Playing" : "Click to Play"}
-      </motion.p>
+    <div className="w-full min-h-screen  flex flex-col items-center justify-center p-4">
+      <div className="flex justify-center items-center gap-10">
+        <h1 className="tracking-tight inline font-semibold text-4xl lg:text-6xl text-white mb-8">
+          Music
+        </h1>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-6xl">
+        {songs.map((song, index) => {
+          return (
+            <MusicCard
+              key={index}
+              title={song.title}
+              artist={song.artist}
+              album={song.album}
+              image={song.image}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
