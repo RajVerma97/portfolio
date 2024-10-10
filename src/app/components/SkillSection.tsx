@@ -132,7 +132,7 @@ const SkillCard: React.FC<{ skill: (typeof skills)[0]; index: number }> = ({
 
 const SkillsSection: React.FC = () => {
   return (
-    <div className="w-full h-screen bg-black">
+    <div className="w-full h-screen">
       <Canvas shadows>
         <PerspectiveCamera makeDefault position={[0, 0, 25]} />
         <ambientLight intensity={0.5} />

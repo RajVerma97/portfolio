@@ -1,59 +1,93 @@
 "use client";
 
+import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Image } from "@nextui-org/react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const projects = [
   {
-    name: "Anime Tracker",
-    description: "A web app to track your favorite anime series",
+    name: "Stock Glimpse",
+    description:
+      "A web app to track your favorite stocks built using Nextjs ,Mongdb ,Typescript",
+    image: "/stock-glimpse.png",
+    path: "https://stock-glimpse.vercel.app/",
   },
   {
-    name: "Music Visualizer",
-    description: "An interactive music visualizer using Web Audio API",
+    name: "Thunder Chat App",
+    description: "A chat app built using React Native and Firebase",
+    image: "/thunder-chat-app.png",
+    path: "https://thunder-chat-app-1.vercel.app/",
   },
   {
-    name: "Portfolio Website",
-    description: "This website, built with Next.js and Framer Motion",
+    name: "Pleasure Fashion",
+    description:
+      "A fashion ecommerce store showcasing  clothing for women built using  Express,Mongodb",
+    image: "/pleasure-fashion.png",
+    path: "https://pleasurefashion-56nk.onrender.com/",
+  },
+  {
+    name: "Movie Zone",
+    description:
+      "A movie streaming website with a sleek UI and responsive design built using React and Firebase",
+    image: "/movie-zone.png",
+    path: "https://moviezone97.netlify.app/",
   },
 ];
 
 function ProjectCard({
   name,
   description,
-  index,
+  image,
 }: {
   name: string;
   description: string;
-  index: number;
+  image: string;
 }) {
   return (
     <motion.div
-      className="bg-gray-700 p-6 rounded-lg shadow-lg"
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ scale: 1.05 }}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      whileHover={{ scale: 1.03 }}
+      whileTap={{ scale: 0.96 }}
     >
-      <h3 className="text-xl font-bold mb-2 text-white">{name}</h3>
-      <p className="text-gray-300">{description}</p>
+      <Card className="bg-white p-4 rounded-md flex justify-center items-center h-[25rem]">
+        <CardBody className="overflow-visible py-2">
+          <Image
+            alt={`${name} screenshot`}
+            className="object-cover rounded-md w-full h-auto p-2"
+            src={image}
+          />
+        </CardBody>
+        <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+          <h4 className="text-lg">{name}</h4>
+          <p className=" font-medium text-gray-400">{description}</p>
+        </CardHeader>
+      </Card>
     </motion.div>
   );
 }
 
 export default function ProjectsSection() {
   return (
-    <div className="w-full min-h-screen bg-gray-900 flex flex-col items-center justify-center p-4">
-      <motion.h2
-        className="text-4xl font-bold mb-8 text-white"
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-      >
-        My Projects
-      </motion.h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl">
-        {projects.map((project, index) => (
-          <ProjectCard key={project.name} {...project} index={index} />
+    <div className="w-full min-h-screen flex flex-col items-center justify-center p-4 gap-8">
+      <div className="flex justify-center items-center gap-10">
+        <h1 className="tracking-tight inline font-semibold text-4xl lg:text-6xl text-white">
+          Projects
+        </h1>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl">
+        {projects.map((project) => (
+          <Link
+            key={project.name}
+            href={project.path}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <ProjectCard {...project} />
+          </Link>
         ))}
       </div>
     </div>
