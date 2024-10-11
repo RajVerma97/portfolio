@@ -1,11 +1,13 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, ThreeEvent } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
 import * as random from "maath/random/dist/maath-random.esm";
 import { Vector3 } from "three";
 import { Points as CustomPoint } from "three";
+import { CursorContext } from "./CursorProvider";
 
+// GuitarNotes Component
 function GuitarNotes({ count = 5000 }: { count?: number }) {
   const ref = useRef<CustomPoint>(null);
   const [sphere] = useState(() =>
@@ -23,7 +25,7 @@ function GuitarNotes({ count = 5000 }: { count?: number }) {
     }
   });
 
-  const handlePointerMove = (event: PointerEvent) => {
+  const handlePointerMove = (event: ThreeEvent<PointerEvent>) => {
     setCursorPos(
       new Vector3(
         (event.clientX / window.innerWidth) * 2 - 1,
@@ -32,9 +34,10 @@ function GuitarNotes({ count = 5000 }: { count?: number }) {
       )
     );
   };
-
   const handlePointerOver = (event: any) => {
-    setHoveredIndex(event.index);
+    if (event.index !== undefined) {
+      setHoveredIndex(event.index);
+    }
   };
 
   const handlePointerOut = () => {
@@ -69,6 +72,7 @@ function GuitarNotes({ count = 5000 }: { count?: number }) {
   );
 }
 
+// AnimatedText Component
 function AnimatedText({ children, delay = 0 }) {
   return (
     <motion.div
@@ -81,10 +85,14 @@ function AnimatedText({ children, delay = 0 }) {
   );
 }
 
+// LandingPage Component
 export default function LandingPage() {
   const [mounted, setMounted] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [audioPlaying, setAudioPlaying] = useState(false);
+
+  const cursorState = useContext(CursorContext);
+  const cursorType = cursorState ? cursorState[0] : "default"; // Default if context is not available
 
   useEffect(() => {
     setMounted(true);
@@ -147,7 +155,11 @@ export default function LandingPage() {
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="text-center z-10">
           <AnimatedText>
-            <h1 className="text-6xl font-bold mb-4 text-white">
+            <h1
+              className="text-6xl font-bold mb-4 text-white"
+              onPointerEnter={() => cursorType === "hovered"}
+              onPointerLeave={() => cursorType === "default"}
+            >
               Welcome to My Portfolio
             </h1>
           </AnimatedText>

@@ -1,57 +1,66 @@
-// CustomCursor.tsx
-import React, { useRef, useState, useEffect } from "react";
-import { useFrame } from "@react-three/fiber";
-import { useCursor } from "@react-three/drei";
-import * as THREE from "three";
+"use client";
+
+import { useEffect, useContext } from "react";
+import { motion, useMotionValue, Variants } from "framer-motion";
+import { CursorContext } from "./CursorProvider";
 
 export default function CustomCursor() {
-  const meshRef = useRef<THREE.Mesh>(null); // Reference for cursor mesh
-  const [hovered, setHovered] = useState(false); // Hover state
+  const cursorState = useContext(CursorContext);
+  const cursorType = cursorState[0];
 
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  // Mouse move event listener to track the cursor position
-  const handleMouseMove = (event: MouseEvent) => {
-    setMousePos({
-      x: (event.clientX / window.innerWidth) * 2 - 1, // Normalize to range (-1 to 1)
-      y: -(event.clientY / window.innerHeight) * 2 + 1,
-    });
-  };
+  const WIDTH = 18; // Cursor size
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
 
   useEffect(() => {
-    // Attach mousemove event to update position
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+    const moveCursor = (e: MouseEvent) => {
+      cursorX.set(e.clientX - WIDTH / 2); // Center the cursor
+      cursorY.set(e.clientY - WIDTH / 2); // Center the cursor
+    };
 
-  // Animate cursor position and scale
-  useFrame(() => {
-    if (meshRef.current) {
-      meshRef.current.position.x = mousePos.x * 5;
-      meshRef.current.position.y = mousePos.y * 5;
+    window.addEventListener("mousemove", moveCursor);
+    return () => {
+      window.removeEventListener("mousemove", moveCursor);
+    };
+  }, [cursorX, cursorY]);
 
-      // Scale on hover
-      meshRef.current.scale.x =
-        meshRef.current.scale.y =
-        meshRef.current.scale.z =
-          THREE.MathUtils.lerp(meshRef.current.scale.x, hovered ? 1.5 : 1, 0.1);
-
-      // Add a continuous rotation effect
-      meshRef.current.rotation.z += 0.01;
-    }
-  });
-
-  // Change cursor when hovering over interactive elements
-  useCursor(hovered);
+  const hoverVariants: Variants = {
+    hovered: {
+      scale: 1.5,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 20,
+      },
+      opacity: 1,
+      mixBlendMode: "difference",
+      background: "white", // White background on hover
+      boxShadow: "0 0 30px rgba(255, 255, 255, 0.8)", // Bright white shadow on hover
+    },
+    default: {
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 100,
+      },
+      opacity: 1,
+      background: "white", // White background by default
+      boxShadow: "0 0 10px rgba(255, 255, 255, 0.5)", // Light shadow
+    },
+  };
 
   return (
-    <mesh
-      ref={meshRef}
-      onPointerOver={() => setHovered(true)}
-      onPointerOut={() => setHovered(false)}
-    >
-      <sphereGeometry args={[0.1, 32, 32]} />
-      <meshStandardMaterial color={hovered ? "hotpink" : "white"} />
-    </mesh>
+    <motion.div
+      variants={hoverVariants}
+      animate={cursorType}
+      className="fixed left-0 top-0 w-12 h-12 rounded-full pointer-events-none z-50"
+      style={{
+        translateX: cursorX,
+        translateY: cursorY,
+        borderRadius: "50%",
+        transition: "all 0.1s ease-out",
+      }}
+    ></motion.div>
   );
 }

@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import Loading from "./components/Loading";
 import { Canvas } from "@react-three/fiber";
 import CustomCursor from "./components/CustomCursor";
+import { Html } from "@react-three/drei";
 
 const DynamicLandingPage = dynamic(
   () => import("@/app/components/LandingPage"),
@@ -45,9 +46,6 @@ const DynamicContactSection = dynamic(
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between ">
-      <Canvas className="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <CustomCursor />
-      </Canvas>
       <Suspense fallback={<Loading />}>
         <DynamicLandingPage />
         <DynamicSkillsSection />
