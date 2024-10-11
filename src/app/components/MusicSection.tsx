@@ -1,8 +1,13 @@
 "use client";
 
+import { useContext } from "react";
+import { CursorContext } from "./CursorProvider";
 import MusicCard from "./MusicCard";
 
 export default function MusicSection() {
+  const cursorState = useContext(CursorContext);
+  // const cursorType = cursorState ? cursorState[0] : "default"; // Default if context is not available
+  const setCursorType = cursorState ? cursorState[1] : undefined; // Will be undefi
   const songs = [
     {
       title: "Perfect",
@@ -32,7 +37,11 @@ export default function MusicSection() {
   return (
     <div className="w-full min-h-screen  flex flex-col items-center justify-center p-4">
       <div className="flex justify-center items-center gap-10">
-        <h1 className="tracking-tight inline font-semibold text-4xl lg:text-6xl text-white mb-8">
+        <h1
+          className="tracking-tight inline font-semibold text-4xl lg:text-6xl text-white mb-8"
+          onPointerEnter={() => setCursorType?.("hovered")}
+          onPointerLeave={() => setCursorType?.("default")}
+        >
           Music
         </h1>
       </div>

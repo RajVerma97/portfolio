@@ -1,9 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { Canvas, useFrame, ThreeEvent } from "@react-three/fiber";
 import { Html, PerspectiveCamera, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { motion } from "framer-motion-3d";
 import Image from "next/image";
+import { CursorContext } from "./CursorProvider";
 
 const skills = [
   {
@@ -131,8 +132,21 @@ const SkillCard: React.FC<{ skill: (typeof skills)[0]; index: number }> = ({
 };
 
 const SkillsSection: React.FC = () => {
+  const cursorState = useContext(CursorContext);
+  // const cursorType = cursorState ? cursorState[0] : "default"; // Default if context is not available
+  const setCursorType = cursorState ? cursorState[1] : undefined; // Will be undefi
+
   return (
     <div className="w-full h-screen">
+      <div className="flex justify-center items-center gap-10">
+        <h1
+          className="tracking-tight inline font-semibold text-4xl lg:text-6xl text-white"
+          onPointerEnter={() => setCursorType?.("hovered")}
+          onPointerLeave={() => setCursorType?.("default")}
+        >
+          Projects
+        </h1>
+      </div>
       <Canvas shadows>
         <PerspectiveCamera makeDefault position={[0, 0, 25]} />
         <ambientLight intensity={0.5} />

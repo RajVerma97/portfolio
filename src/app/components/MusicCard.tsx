@@ -1,7 +1,8 @@
 import { Button, Card, CardBody, Image, Slider } from "@nextui-org/react";
-import { HeartIcon, PauseCircleIcon, ShuffleIcon } from "lucide-react";
+import { HeartIcon, PauseCircleIcon } from "lucide-react";
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useContext } from "react";
+import { CursorContext } from "./CursorProvider";
 
 // Icons for Next and Previous
 export const NextIcon = ({ size = 24, width, height, ...props }) => (
@@ -55,25 +56,23 @@ interface MusicCardProps {
   album: string;
   image: string;
 }
-
-export default function MusicCard({
-  title,
-  artist,
-  album,
-  image,
-}: MusicCardProps) {
+export default function MusicCard({ title, artist, image }: MusicCardProps) {
   const [liked, setLiked] = React.useState(false);
+  const cursorState = useContext(CursorContext);
+  const setCursorType = cursorState ? cursorState[1] : undefined;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeInOut" }}
-      className="p-6 relative w-full rounded-xl bg-gradient-to-tr from-[#00A3E1] via-[#50C878] to-[#FFAE42] shadow-lg"
+      className="bg-white p-4 rounded-xl flex justify-center items-center" // Light green background
+      onPointerEnter={() => setCursorType?.("hovered")}
+      onPointerLeave={() => setCursorType?.("default")}
     >
       <Card
         isBlurred
-        className="bg-white dark:bg-gray-900 max-w-[610px] rounded-xl p-4"
+        className="bg-black dark:bg-gray-900 max-w-[610px] rounded-xl p-4" // Black background for Card
         shadow="md"
       >
         <CardBody>
@@ -94,10 +93,14 @@ export default function MusicCard({
             <div className="flex flex-col col-span-6 md:col-span-8">
               <div className="flex justify-between items-start">
                 <div className="flex flex-col gap-0">
-                  <h3 className="font-semibold text-gray-600 dark:text-white">
+                  <h3 className="font-semibold text-gray-200 dark:text-white">
+                    {" "}
+                    {/* Updated to gray-200 for better visibility */}
                     {artist}
                   </h3>
-                  <h1 className="text-xl font-bold mt-1 text-gray-900 dark:text-white">
+                  <h1 className="text-xl font-bold mt-1 text-white dark:text-white">
+                    {" "}
+                    {/* Set to white for better contrast */}
                     {title}
                   </h1>
                 </div>
@@ -133,10 +136,16 @@ export default function MusicCard({
                   size="md"
                 />
                 <div className="flex justify-between">
-                  <p className="text-sm text-gray-700 dark:text-gray-400">
+                  <p className="text-sm text-gray-300 dark:text-gray-400">
+                    {" "}
+                    {/* Updated to gray-300 for better visibility */}
                     1:23
                   </p>
-                  <p className="text-sm text-gray-500">4:32</p>
+                  <p className="text-sm text-gray-200">
+                    {" "}
+                    {/* Updated to gray-200 for better visibility */}
+                    4:32
+                  </p>
                 </div>
               </div>
 

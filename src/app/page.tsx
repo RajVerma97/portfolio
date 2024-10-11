@@ -3,9 +3,6 @@
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import Loading from "./components/Loading";
-import { Canvas } from "@react-three/fiber";
-import CustomCursor from "./components/CustomCursor";
-import { Html } from "@react-three/drei";
 
 const DynamicLandingPage = dynamic(
   () => import("@/app/components/LandingPage"),

@@ -33,9 +33,9 @@ export default function CustomCursor() {
         damping: 20,
       },
       opacity: 1,
-      mixBlendMode: "difference",
+      mixBlendMode: "difference", // Blend the background with the foreground
       background: "white", // White background on hover
-      boxShadow: "0 0 30px rgba(255, 255, 255, 0.8)", // Bright white shadow on hover
+      boxShadow: "0 0 30px rgba(173, 216, 230, 0.8)", // Bright white shadow on hover
     },
     default: {
       scale: 1,
