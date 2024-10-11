@@ -4,12 +4,12 @@ import { Canvas, useFrame, ThreeEvent } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
 import * as random from "maath/random/dist/maath-random.esm";
 import { Vector3 } from "three";
-import { Points as CustomPoint } from "three";
 import { CursorContext } from "./CursorProvider";
+import * as THREE from "three";
 
 // GuitarNotes Component
 function GuitarNotes({ count = 5000 }: { count?: number }) {
-  const ref = useRef<CustomPoint>(null);
+  const ref = useRef<THREE.Points>(null);
   const [sphere] = useState(() =>
     random.inSphere(new Float32Array(count * 3), { radius: 1.5 })
   );
@@ -18,7 +18,7 @@ function GuitarNotes({ count = 5000 }: { count?: number }) {
 
   useFrame((state, delta) => {
     if (ref.current) {
-      const points = ref.current as CustomPoint;
+      const points = ref.current;
       points.rotation.x -= delta / 10;
       points.rotation.y -= delta / 15;
       points.position.lerp(cursorPos, 0.02);
@@ -34,6 +34,7 @@ function GuitarNotes({ count = 5000 }: { count?: number }) {
       )
     );
   };
+
   const handlePointerOver = (event: any) => {
     if (event.index !== undefined) {
       setHoveredIndex(event.index);
@@ -91,8 +92,10 @@ export default function LandingPage() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [audioPlaying, setAudioPlaying] = useState(false);
 
+  // Ensure CursorContext is defined
   const cursorState = useContext(CursorContext);
-  const cursorType = cursorState ? cursorState[0] : "default"; // Default if context is not available
+  // const cursorType = cursorState ? cursorState[0] : "default"; // Default if context is not available
+  const setCursorType = cursorState ? cursorState[1] : undefined; // Will be undefined if context is not available
 
   useEffect(() => {
     setMounted(true);
@@ -157,23 +160,35 @@ export default function LandingPage() {
           <AnimatedText>
             <h1
               className="text-6xl font-bold mb-4 text-white"
-              onPointerEnter={() => cursorType === "hovered"}
-              onPointerLeave={() => cursorType === "default"}
+              onPointerEnter={() => setCursorType?.("hovered")}
+              onPointerLeave={() => setCursorType?.("default")}
             >
-              Welcome to My Portfolio
+              Hello ! I am Rajneesh Kumar
             </h1>
           </AnimatedText>
           <AnimatedText delay={0.5}>
-            <p className="text-2xl text-gray-300">Software Developer</p>
+            <p
+              className="text-2xl text-gray-300"
+              onPointerEnter={() => setCursorType?.("hovered")}
+              onPointerLeave={() => setCursorType?.("default")}
+            >
+              Software Developer
+            </p>
           </AnimatedText>
           <AnimatedText delay={1}>
-            <p className="text-xl text-gray-400 mt-4">
+            <p
+              className="text-xl text-gray-400 mt-4"
+              onPointerEnter={() => setCursorType?.("hovered")}
+              onPointerLeave={() => setCursorType?.("default")}
+            >
               Scroll down to explore my world
             </p>
           </AnimatedText>
           <button
             onClick={toggleAudio}
             className="mt-8 px-4 py-2 bg-blue-500 text-white rounded"
+            // onPointerEnter={() => setCursorType?.("hovered")}
+            // onPointerLeave={() => setCursorType?.("default")}
           >
             {audioPlaying ? "Pause Music" : "Play Music"}
           </button>

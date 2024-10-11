@@ -4,6 +4,8 @@ import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { Image } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useContext } from "react";
+import { CursorContext } from "./CursorProvider";
 
 const projects = [
   {
@@ -44,6 +46,8 @@ function ProjectCard({
   description: string;
   image: string;
 }) {
+  const cursorState = useContext(CursorContext);
+  const setCursorType = cursorState ? cursorState[1] : undefined; // Will be undefi
   return (
     <motion.div
       initial="hidden"
@@ -51,6 +55,8 @@ function ProjectCard({
       viewport={{ once: true, amount: 0.3 }}
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.96 }}
+      onPointerEnter={() => setCursorType?.("hovered")}
+      onPointerLeave={() => setCursorType?.("default")}
     >
       <Card className="bg-white p-4 rounded-md flex justify-center items-center h-[25rem]">
         <CardBody className="overflow-visible py-2">
@@ -70,10 +76,16 @@ function ProjectCard({
 }
 
 export default function ProjectsSection() {
+  const cursorState = useContext(CursorContext);
+  const setCursorType = cursorState ? cursorState[1] : undefined; // Will be undefi
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center p-4 gap-8">
       <div className="flex justify-center items-center gap-10">
-        <h1 className="tracking-tight inline font-semibold text-4xl lg:text-6xl text-white">
+        <h1
+          className="tracking-tight inline font-semibold text-4xl lg:text-6xl text-white"
+          onPointerEnter={() => setCursorType?.("hovered")}
+          onPointerLeave={() => setCursorType?.("default")}
+        >
           Projects
         </h1>
       </div>
