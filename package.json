@@ -16,6 +16,7 @@
     "@react-three/fiber": "^8.17.10",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "cursor-effects": "^1.0.15",
     "drei": "^2.2.21",
     "framer-motion": "^11.11.7",
     "framer-motion-3d": "^11.11.7",
