@@ -1,11 +1,21 @@
-import { Button, Card, CardBody, Image, Slider } from "@nextui-org/react";
-import { HeartIcon, PauseCircleIcon } from "lucide-react";
+"use client";
+import { Button, Card, CardBody, CardHeader, Image } from "@nextui-org/react";
+import { PauseCircleIcon, PlayCircleIcon } from "lucide-react";
 import { motion } from "framer-motion";
-import React, { useContext } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { CursorContext } from "./CursorProvider";
 
 // Icons for Next and Previous
-export const NextIcon = ({ size = 24, width, height, ...props }) => (
+export const NextIcon = ({
+  size = 24,
+  width = 24,
+  height = 24,
+  ...props
+}: {
+  size?: number;
+  width?: number;
+  height?: number;
+}) => (
   <svg
     aria-hidden="true"
     fill="none"
@@ -27,7 +37,16 @@ export const NextIcon = ({ size = 24, width, height, ...props }) => (
   </svg>
 );
 
-export const PreviousIcon = ({ size = 24, width, height, ...props }) => (
+export const PreviousIcon = ({
+  size = 24,
+  width = 24,
+  height = 24,
+  ...props
+}: {
+  size?: number;
+  width?: number;
+  height?: number;
+}) => (
   <svg
     aria-hidden="true"
     fill="none"
@@ -55,129 +74,93 @@ interface MusicCardProps {
   artist: string;
   album: string;
   image: string;
+  audioSrc: string;
 }
-export default function MusicCard({ title, artist, image }: MusicCardProps) {
-  const [liked, setLiked] = React.useState(false);
+
+export default function MusicCard({
+  title,
+  artist,
+  image,
+  audioSrc,
+}: MusicCardProps) {
+  const [isPlaying, setIsPlaying] = useState(false);
   const cursorState = useContext(CursorContext);
   const setCursorType = cursorState ? cursorState[1] : undefined;
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Toggle play/pause
+  const handlePlayPause = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeInOut" }}
-      className="bg-white p-4 rounded-xl flex justify-center items-center" // Light green background
+      className="bg-white p-2 rounded-xl flex justify-center items-center"
       onPointerEnter={() => setCursorType?.("hovered")}
       onPointerLeave={() => setCursorType?.("default")}
     >
       <Card
         isBlurred
-        className="bg-black dark:bg-gray-900 max-w-[610px] rounded-xl p-4" // Black background for Card
+        className="bg-gray-700 dark:bg-gray-900 max-w-[610px] rounded-xl p-4"
         shadow="md"
       >
         <CardBody>
-          <div className="grid grid-cols-6 md:grid-cols-12 gap-6 items-center justify-center">
+          <div className="">
             <motion.div
               whileHover={{ scale: 1.05 }}
               className="relative col-span-6 md:col-span-4"
             >
               <Image
                 alt="Album cover"
-                className="object-fit rounded-lg"
-                height={220}
+                className="object-cover rounded-lg w-full h-full"
                 src={image}
-                width="100%"
               />
             </motion.div>
-
-            <div className="flex flex-col col-span-6 md:col-span-8">
-              <div className="flex justify-between items-start">
-                <div className="flex flex-col gap-0">
-                  <h3 className="font-semibold text-gray-200 dark:text-white">
-                    {" "}
-                    {/* Updated to gray-200 for better visibility */}
-                    {artist}
-                  </h3>
-                  <h1 className="text-xl font-bold mt-1 text-white dark:text-white">
-                    {" "}
-                    {/* Set to white for better contrast */}
-                    {title}
-                  </h1>
-                </div>
-                <Button
-                  isIconOnly
-                  className="text-default-900/60 hover:bg-foreground/20"
-                  radius="full"
-                  variant="light"
-                  onPress={() => setLiked((v) => !v)}
-                >
-                  <motion.div
-                    whileTap={{ scale: 0.8 }}
-                    animate={{ scale: liked ? 1.1 : 1 }}
-                  >
-                    <HeartIcon
-                      className={liked ? "[&>path]:stroke-transparent" : ""}
-                      fill={liked ? "currentColor" : "none"}
-                    />
-                  </motion.div>
-                </Button>
-              </div>
-
-              <div className="flex flex-col mt-4 gap-2">
-                <Slider
-                  aria-label="Music progress"
-                  classNames={{
-                    track: "bg-default-500/20",
-                    thumb:
-                      "w-3 h-3 after:w-2 after:h-2 after:bg-gray-800 dark:after:bg-gray-300",
-                  }}
-                  color="primary"
-                  defaultValue={33}
-                  size="md"
-                />
-                <div className="flex justify-between">
-                  <p className="text-sm text-gray-300 dark:text-gray-400">
-                    {" "}
-                    {/* Updated to gray-300 for better visibility */}
-                    1:23
-                  </p>
-                  <p className="text-sm text-gray-200">
-                    {" "}
-                    {/* Updated to gray-200 for better visibility */}
-                    4:32
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex w-full items-center justify-center mt-4">
-                <Button
-                  isIconOnly
-                  className="hover:bg-gray-200 dark:hover:bg-gray-700"
-                  radius="full"
-                  variant="light"
-                >
-                  <PreviousIcon width={undefined} height={undefined} />
-                </Button>
-                <Button
-                  isIconOnly
-                  className="w-auto h-auto hover:bg-gray-200 dark:hover:bg-gray-700"
-                  radius="full"
-                  variant="light"
-                >
-                  <PauseCircleIcon size={54} />
-                </Button>
-                <Button
-                  isIconOnly
-                  className="hover:bg-gray-200 dark:hover:bg-gray-700"
-                  radius="full"
-                  variant="light"
-                >
-                  <NextIcon width={undefined} height={undefined} />
-                </Button>
-              </div>
-            </div>
           </div>
         </CardBody>
+
+        <CardHeader>
+          <div className="flex flex-col col-span-6 md:col-span-8 py-4">
+            <div className="flex justify-between items-start">
+              <div className="flex flex-col gap-0">
+                <h3 className="font-semibold text-gray-200 dark:text-white">
+                  {artist}
+                </h3>
+                <h1 className="text-xl font-bold mt-1 text-white dark:text-white">
+                  {title}
+                </h1>
+              </div>
+            </div>
+
+            <div className="flex w-full mt-4">
+              <Button
+                isIconOnly
+                className="w-auto h-auto bg-white hover:bg-gray-700"
+                radius="full"
+                variant="light"
+                onPress={handlePlayPause}
+              >
+                {isPlaying ? (
+                  <PauseCircleIcon size={54} />
+                ) : (
+                  <PlayCircleIcon size={54} />
+                )}
+              </Button>
+            </div>
+            <audio ref={audioRef} src={audioSrc} />
+          </div>
+        </CardHeader>
       </Card>
     </motion.div>
   );

@@ -1,168 +1,68 @@
-import React, { useState, useRef, useContext } from "react";
-import { Canvas, useFrame, ThreeEvent } from "@react-three/fiber";
-import { Html, PerspectiveCamera, OrbitControls } from "@react-three/drei";
-import * as THREE from "three";
-import { motion } from "framer-motion-3d";
-import Image from "next/image";
+import React, { useContext } from "react";
+import { Image } from "@nextui-org/react";
+import { motion } from "framer-motion"; // For smooth hover animations
 import { CursorContext } from "./CursorProvider";
 
+// Skills data
 const skills = [
-  {
-    name: "JavaScript",
-    description:
-      "A versatile programming language primarily used for web development.",
-    projects: ["Project A", "Project B"],
-    image: "/javascript.svg",
-  },
-  {
-    name: "React",
-    description: "A JavaScript library for building user interfaces.",
-    projects: ["Project C", "Project D"],
-    image: "/react.svg",
-  },
-  {
-    name: "Next.js",
-    description: "A React framework for server-rendered applications.",
-    projects: ["Project E", "Project F"],
-    image: "/nextjs.svg",
-  },
-  {
-    name: "TypeScript",
-    description: "A superset of JavaScript that adds static types.",
-    projects: ["Project G", "Project H"],
-    image: "/typescript.svg",
-  },
-  {
-    name: "React Native",
-    description: "A framework for building native mobile apps with React.",
-    projects: ["Project I", "Project J"],
-    image: "/typescript.svg",
-  },
-  {
-    name: "MongoDB",
-    description: "A NoSQL database for modern applications.",
-    projects: ["Project I", "Project J"],
-    image: "/mongodb.png",
-  },
+  { name: "Next.js", image: "/nextjs.svg" },
+  { name: "React Native", image: "/react-native.svg" },
+  { name: "Nodejs", image: "/nodejs.svg" },
+  { name: "React", image: "/react.svg" },
+  { name: "TypeScript", image: "/typescript.svg" },
+  { name: "Firebase", image: "/firebase.svg" },
+  { name: "JavaScript", image: "/javascript.svg" },
+  { name: "MongoDB", image: "/mongodb.png" },
+  { name: "Docker", image: "/docker.svg" },
+  { name: "Git", image: "/git.svg" },
+  { name: "AWS", image: "/aws.svg" },
+  { name: "Redux", image: "/redux.png" },
 ];
 
-const SkillCard: React.FC<{ skill: (typeof skills)[0]; index: number }> = ({
-  skill,
-  index,
-}) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [isFlipped, setIsFlipped] = useState(false);
-  const meshRef = useRef<THREE.Mesh>(null);
-
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y =
-        Math.sin(state.clock.elapsedTime * 0.5 + index) * 0.2;
-      meshRef.current.position.y =
-        Math.sin(state.clock.elapsedTime + index) * 0.1;
-    }
-  });
-
-  const handleClick = (e: ThreeEvent<MouseEvent>) => {
-    e.stopPropagation();
-    setIsFlipped(!isFlipped);
-  };
-
-  const positionX = (index - (skills.length - 1) / 2) * 7;
-
+// SkillCard component
+const SkillCard = ({ skill }) => {
   return (
-    <motion.mesh
-      ref={meshRef}
-      position={[positionX, 0, 0]}
-      onClick={handleClick}
-      onPointerOver={(e) => {
-        e.stopPropagation();
-        setIsHovered(true);
-      }}
-      onPointerOut={(e) => {
-        e.stopPropagation();
-        setIsHovered(false);
-      }}
-      scale={isHovered ? 1.1 : 1}
-      animate={{ rotateY: isFlipped ? Math.PI : 0 }}
-      transition={{ type: "spring", stiffness: 100, damping: 10 }}
+    <motion.div
+      className="relative p-1 rounded-full shadow-lg cursor-pointer"
+      whileHover={{ scale: 1.2, rotate: 5 }} // Smooth hover effect with slight rotation
+      transition={{ type: "spring", stiffness: 260, damping: 20 }}
     >
-      <boxGeometry args={[1.8, 2.5, 0.1]} />
-      {/* Set opacity to 0 to remove visible box */}
-      <meshStandardMaterial transparent={true} opacity={0} />
-      <Html
-        transform
-        occlude
-        position={[0, 0, 0.1]}
-        style={{
-          transition: "all 0.3s",
-          opacity: isHovered ? 1 : 0.8,
-          transform: `rotateY(${isFlipped ? "180deg" : "0"})`,
-        }}
-      >
-        <div className="w-64 h-80 p-4 rounded-lg shadow-lg overflow-hidden flex flex-col items-center bg-white">
+      {/* Circular gradient border */}
+      <div className="bg-gradient-to-r from-pink-500 to-orange-500 p-1 rounded-full">
+        <div className="bg-black rounded-full w-32 h-32 flex justify-center items-center">
           <Image
-            width={100}
-            height={100}
             src={skill.image}
             alt={skill.name}
-            className="w-16 h-16 mb-4" // Adjust image size as needed
+            width={60}
+            height={60}
+            className="rounded-full"
           />
-          {!isFlipped ? (
-            <div className="h-full flex flex-col justify-center items-center">
-              <h3 className="text-2xl font-bold mb-2">{skill.name}</h3>
-              <p className="text-gray-600 text-center">{skill.description}</p>
-            </div>
-          ) : (
-            <div className="h-full flex flex-col justify-center items-center">
-              <h3 className="text-xl font-semibold mb-2">Projects:</h3>
-              <ul className="list-disc list-inside">
-                {skill.projects.map((project, index) => (
-                  <li key={index} className="text-gray-600">
-                    {project}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
         </div>
-      </Html>
-    </motion.mesh>
+      </div>
+      <h2 className="mt-4 text-center text-white text-lg font-semibold">
+        {skill.name}
+      </h2>
+    </motion.div>
   );
 };
 
-const SkillsSection: React.FC = () => {
+export default function SkillsSection() {
   const cursorState = useContext(CursorContext);
-  // const cursorType = cursorState ? cursorState[0] : "default"; // Default if context is not available
-  const setCursorType = cursorState ? cursorState[1] : undefined; // Will be undefi
-
+  const setCursorType = cursorState ? cursorState[1] : undefined; // Will be undefined if context is not provided
   return (
-    <div className="w-full h-screen">
-      <div className="flex justify-center items-center gap-10">
-        <h1
-          className="tracking-tight inline font-semibold text-4xl lg:text-6xl text-white"
-          onPointerEnter={() => setCursorType?.("hovered")}
-          onPointerLeave={() => setCursorType?.("default")}
-        >
-          Projects
-        </h1>
-      </div>
-      <Canvas shadows>
-        <PerspectiveCamera makeDefault position={[0, 0, 25]} />
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={1} castShadow />
+    <div className="w-full min-h-screen flex flex-col justify-center items-center">
+      <h1
+        className="text-4xl lg:text-6xl font-semibold text-white mb-10"
+        onPointerEnter={() => setCursorType?.("hovered")}
+        onPointerLeave={() => setCursorType?.("default")}
+      >
+        Skills
+      </h1>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-12 px-6">
         {skills.map((skill, index) => (
-          <SkillCard key={index} skill={skill} index={index} />
+          <SkillCard key={index} skill={skill} />
         ))}
-        <OrbitControls
-          enableZoom={false}
-          enablePan={false}
-          minPolarAngle={Math.PI / 2}
-          maxPolarAngle={Math.PI / 2}
-        />
-      </Canvas>
+      </div>
     </div>
   );
-};
-
-export default SkillsSection;
+}

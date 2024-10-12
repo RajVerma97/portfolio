@@ -1,206 +1,99 @@
-import { useRef, useState, useEffect, useContext } from "react";
-import { motion } from "framer-motion";
-import { Canvas, useFrame, ThreeEvent } from "@react-three/fiber";
-import { Points, PointMaterial } from "@react-three/drei";
-import * as random from "maath/random/dist/maath-random.esm";
-import { Vector3 } from "three";
+// LandingPage.tsx
+import { Canvas } from "@react-three/fiber";
+import { NeonWaveContainer } from "./NeonWave"; // Import the NeonWaveContainer component
 import { CursorContext } from "./CursorProvider";
-import * as THREE from "three";
-
-// GuitarNotes Component
-function GuitarNotes({ count = 5000 }: { count?: number }) {
-  const ref = useRef<THREE.Points>(null);
-  const [sphere] = useState(() =>
-    random.inSphere(new Float32Array(count * 3), { radius: 1.5 })
-  );
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [cursorPos, setCursorPos] = useState(new Vector3(0, 0, 0));
-
-  useFrame((state, delta) => {
-    if (ref.current) {
-      const points = ref.current;
-      points.rotation.x -= delta / 10;
-      points.rotation.y -= delta / 15;
-      points.position.lerp(cursorPos, 0.02);
-    }
-  });
-
-  const handlePointerMove = (event: ThreeEvent<PointerEvent>) => {
-    setCursorPos(
-      new Vector3(
-        (event.clientX / window.innerWidth) * 2 - 1,
-        -(event.clientY / window.innerHeight) * 2 + 1,
-        0
-      )
-    );
-  };
-
-  const handlePointerOver = (event: any) => {
-    if (event.index !== undefined) {
-      setHoveredIndex(event.index);
-    }
-  };
-
-  const handlePointerOut = () => {
-    setHoveredIndex(null);
-  };
-
-  const handleClick = () => {
-    random.inSphere(sphere, { radius: 3 });
-  };
-
-  return (
-    <group rotation={[0, 0, Math.PI / 4]}>
-      <Points
-        ref={ref}
-        positions={sphere}
-        stride={3}
-        frustumCulled={false}
-        onPointerMove={handlePointerMove}
-        onClick={handleClick}
-        onPointerOver={handlePointerOver}
-        onPointerOut={handlePointerOut}
-      >
-        <PointMaterial
-          transparent
-          color={hoveredIndex !== null ? "#ff4081" : "#ffffff"}
-          size={hoveredIndex !== null ? 0.015 : 0.005}
-          sizeAttenuation={true}
-          depthWrite={false}
-        />
-      </Points>
-    </group>
-  );
-}
-
-// AnimatedText Component
-function AnimatedText({ children, delay = 0 }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1, delay }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-// LandingPage Component
+import { useContext } from "react";
+import Link from "next/link";
+import { Image } from "@nextui-org/react";
+import { motion } from "framer-motion";
+const socials = [
+  {
+    name: "Github",
+    image: "/github.svg",
+    path: "https://github.com/RajVerma97",
+    bgColor: "bg-gray-800", // Darker gray for a sleek look
+  },
+  {
+    name: "Twitter",
+    image: "/twitter.svg",
+    path: "https://x.com/RajVerma885633",
+    bgColor: "bg-blue-500", // Bright blue to stand out
+  },
+  {
+    name: "LinkedIn",
+    image: "/linkedin.svg",
+    path: "https://www.linkedin.com/in/rajneesh-verma-026b141b7/",
+    bgColor: "bg-[#0077B5]", // LinkedIn blue
+  },
+  {
+    name: "Leetcode",
+    image: "/leetcode.png",
+    path: "https://leetcode.com/u/RajneeshVerma42/",
+    bgColor: "bg-[#F9C32B]", // LeetCode yellow for contrast
+  },
+];
 export default function LandingPage() {
-  const [mounted, setMounted] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [audioPlaying, setAudioPlaying] = useState(false);
-
-  // Ensure CursorContext is defined
   const cursorState = useContext(CursorContext);
-  // const cursorType = cursorState ? cursorState[0] : "default"; // Default if context is not available
-  const setCursorType = cursorState ? cursorState[1] : undefined; // Will be undefined if context is not available
-
-  useEffect(() => {
-    setMounted(true);
-
-    // Attempt to play audio when component mounts
-    const audioElement = audioRef.current;
-    if (audioElement) {
-      audioElement.play().catch((error) => {
-        console.error("Error playing audio:", error);
-      });
-    }
-  }, []);
-
-  const toggleAudio = () => {
-    const audioElement = audioRef.current;
-    if (audioElement) {
-      if (audioPlaying) {
-        audioElement.pause();
-      } else {
-        audioElement.play().catch((error) => {
-          console.error("Error playing audio:", error);
-        });
-      }
-      setAudioPlaying(!audioPlaying);
-    }
-  };
-
-  const handleUserInteraction = () => {
-    const audioElement = audioRef.current;
-    if (audioElement && audioElement.muted) {
-      audioElement.muted = false; // Unmute on user interaction
-      audioElement.play().catch((error) => {
-        console.error("Error playing audio on interaction:", error);
-      });
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("click", handleUserInteraction);
-    window.addEventListener("keydown", handleUserInteraction);
-
-    return () => {
-      window.removeEventListener("click", handleUserInteraction);
-      window.removeEventListener("keydown", handleUserInteraction);
-    };
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
+  const setCursorType = cursorState ? cursorState[1] : undefined; // Will be undefined if context is not provided
 
   return (
-    <div
-      className="relative w-full h-screen overflow-hidden bg-black"
-      onMouseMove={(e) => e.preventDefault()}
-    >
-      <Canvas camera={{ position: [0, 0, 1] }} style={{ background: "black" }}>
-        <GuitarNotes />
-      </Canvas>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="text-center z-10">
-          <AnimatedText>
-            <h1
-              className="text-6xl font-bold mb-4 text-white"
-              onPointerEnter={() => setCursorType?.("hovered")}
-              onPointerLeave={() => setCursorType?.("default")}
-            >
-              Hello ! I am Rajneesh Kumar
-            </h1>
-          </AnimatedText>
-          <AnimatedText delay={0.5}>
-            <p
-              className="text-2xl text-gray-300"
-              onPointerEnter={() => setCursorType?.("hovered")}
-              onPointerLeave={() => setCursorType?.("default")}
-            >
-              Software Developer
-            </p>
-          </AnimatedText>
-          <AnimatedText delay={1}>
-            <p
-              className="text-xl text-gray-400 mt-4"
-              onPointerEnter={() => setCursorType?.("hovered")}
-              onPointerLeave={() => setCursorType?.("default")}
-            >
-              Scroll down to explore my world
-            </p>
-          </AnimatedText>
-          <button
-            onClick={toggleAudio}
-            className="mt-8 px-4 py-2 bg-blue-500 text-white rounded"
-            // onPointerEnter={() => setCursorType?.("hovered")}
-            // onPointerLeave={() => setCursorType?.("default")}
+    <div className="relative w-full h-screen p-14 flex flex-col justify-between mb-10">
+      {/* Centered content box */}
+      <div className="flex flex-col z-20">
+        <div className="flex flex-col ">
+          <h1
+            className="tracking-tight font-semibold text-6xl text-white"
+            onPointerEnter={() => setCursorType?.("hovered")}
+            onPointerLeave={() => setCursorType?.("default")}
           >
-            {audioPlaying ? "Pause Music" : "Play Music"}
-          </button>
+            Hello! I am Rajneesh Kumar
+          </h1>
+
+          <div className="flex items-center gap-4">
+            <h4
+              className="tracking-tight  text-2xl text-white"
+              onPointerEnter={() => setCursorType?.("hovered")}
+              onPointerLeave={() => setCursorType?.("default")}
+            >
+              Full Software Developer
+            </h4>
+            <Image src="/code-2.png" alt="dev" width={80} height={50} />
+          </div>
         </div>
-        <audio
-          ref={audioRef}
-          id="bg-music"
-          src="/space-music.mp3"
-          loop
-          muted // Mute audio initially to allow autoplay
-          style={{ display: "block" }} // Make audio element visible for testing
-        />
+      </div>
+
+      <div className="w-full h-[35rem] mt-8">
+        <Canvas camera={{ position: [0, 0, 5] }}>
+          <ambientLight intensity={0.5} />
+          <pointLight position={[10, 10, 10]} />
+          <NeonWaveContainer />
+        </Canvas>
+      </div>
+
+      {/* Social Icons Container */}
+      <div className="absolute top-[15rem] left-[2rem] transform flex flex-col gap-8 p-4 rounded-full shadow-md">
+        {socials.map((social) => (
+          <Link
+            key={social.name}
+            href={social.path}
+            target="_blank"
+            rel="noopener noreferrer"
+            onPointerEnter={() => setCursorType?.("hovered")}
+            onPointerLeave={() => setCursorType?.("default")}
+          >
+            <motion.div
+              whileHover={{ scale: 1.3 }}
+              className={`flex flex-col items-center cursor-pointer mx-2 p-2 rounded-full bg-white `}
+            >
+              <Image
+                src={social.image}
+                alt={`${social.name} logo`}
+                width={40}
+                height={40}
+              />
+            </motion.div>
+          </Link>
+        ))}
       </div>
     </div>
   );

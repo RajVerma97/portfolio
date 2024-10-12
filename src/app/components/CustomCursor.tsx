@@ -8,7 +8,7 @@ export default function CustomCursor() {
   const cursorState = useContext(CursorContext);
   const cursorType = cursorState[0];
 
-  const WIDTH = 18; // Cursor size
+  const WIDTH = 25; // Cursor size
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
