@@ -3,60 +3,51 @@
 import { useContext } from "react";
 import { CursorContext } from "./CursorProvider";
 import MusicCard from "./MusicCard";
+import { Youtube } from "lucide-react";
+import YouTubeMusicPlayer from "./YoutubeMusicPlayer";
 
 export default function MusicSection() {
   const cursorState = useContext(CursorContext);
-  // const cursorType = cursorState ? cursorState[0] : "default"; // Default if context is not available
-  const setCursorType = cursorState ? cursorState[1] : undefined; // Will be undefi
+  const setCursorType = cursorState ? cursorState[1] : undefined;
+
+  // Sample song data
   const songs = [
     {
       title: "Perfect",
-      artist: "Ed Sheeran",
-      album: "÷",
-      image: "/tu-hai-kahan.png",
+      videoUrl: "https://www.youtube.com/watch?v=2Vv-BfVoq4g",
     },
     {
       title: "Sugar",
-      artist: "Maroon 5",
-      album: "Songs About Jane",
-      image: "perfect.png",
+      videoUrl: "https://www.youtube.com/watch?v=09R8_2nJtjg",
     },
     {
-      title: "Tuhaikahan",
-      artist: "Uraan",
-      album: "Tuhaikahan",
-      image: "/sugar.png",
+      title: "Tu Hai Kahan",
+      videoUrl: "https://www.youtube.com/watch?v=AX6OrbgS8lI",
     },
     {
-      title: "Tuhaikahan",
-      artist: "Uraan",
-      album: "Tuhaikahan",
-      image: "/sugar.png",
+      title: "We dont'talk anymore ",
+      videoUrl: "https://www.youtube.com/watch?v=3AtDnEC4zak",
     },
   ];
+
   return (
-    <div className="w-full min-h-screen  flex flex-col items-center justify-center p-4">
-      <div className="flex justify-center items-center gap-10">
+    <div className="w-full  flex flex-col  p-4 bg-black">
+      <div className="flex justify-center items-center gap-10 mb-8">
         <h1
-          className="tracking-tight inline font-semibold text-4xl lg:text-6xl text-white mb-8"
+          className="tracking-tight inline font-semibold text-4xl lg:text-6xl text-white"
           onPointerEnter={() => setCursorType?.("hovered")}
           onPointerLeave={() => setCursorType?.("default")}
         >
-          Music
+          Creative Soundtracks
         </h1>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-6xl">
+      <div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 md:gap-12 max-w-6xl"
+        data-aos="fade-up"
+      >
         {songs.map((song, index) => {
-          return (
-            <MusicCard
-              key={index}
-              title={song.title}
-              artist={song.artist}
-              album={song.album}
-              image={song.image}
-            />
-          );
+          return <YouTubeMusicPlayer videoUrl={song.videoUrl} key={index} />;
         })}
       </div>
     </div>

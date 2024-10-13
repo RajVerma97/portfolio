@@ -3,12 +3,13 @@
 import { useEffect, useContext } from "react";
 import { motion, useMotionValue, Variants } from "framer-motion";
 import { CursorContext } from "./CursorProvider";
+import { useMediaQuery } from "react-responsive";
 
 export default function CustomCursor() {
   const cursorState = useContext(CursorContext);
   const cursorType = cursorState[0];
 
-  const WIDTH = 18; // Cursor size
+  const WIDTH = 25; // Cursor size
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
@@ -50,17 +51,21 @@ export default function CustomCursor() {
     },
   };
 
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+
   return (
-    <motion.div
-      variants={hoverVariants}
-      animate={cursorType}
-      className="fixed left-0 top-0 w-12 h-12 rounded-full pointer-events-none z-50"
-      style={{
-        translateX: cursorX,
-        translateY: cursorY,
-        borderRadius: "50%",
-        transition: "all 0.1s ease-out",
-      }}
-    ></motion.div>
+    !isMobile && (
+      <motion.div
+        variants={hoverVariants}
+        animate={cursorType}
+        className="fixed left-0 top-0 w-12 h-12 rounded-full pointer-events-none z-50"
+        style={{
+          translateX: cursorX,
+          translateY: cursorY,
+          borderRadius: "50%",
+          transition: "all 0.1s ease-out",
+        }}
+      ></motion.div>
+    )
   );
 }

@@ -1,8 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
 import Loading from "./components/Loading";
+import "aos/dist/aos.css"; // Import AOS styles
 
 const DynamicLandingPage = dynamic(
   () => import("@/app/components/LandingPage"),
@@ -32,24 +32,15 @@ const DynamicMusicSection = dynamic(
     loading: () => <Loading />,
   }
 );
-const DynamicContactSection = dynamic(
-  () => import("@/app/components/ContactSection"),
-  {
-    ssr: false,
-    loading: () => <Loading />,
-  }
-);
-
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between ">
-      <Suspense fallback={<Loading />}>
+    <main className="flex min-h-screen flex-col items-center justify-between p-8    md:py-10 md:px-16 lg:py-16 lg:px-24">
+      <div className="grid gap-8 md:gap-10 lg:gap-16">
         <DynamicLandingPage />
         <DynamicSkillsSection />
         <DynamicProjectsSection />
         <DynamicMusicSection />
-        <DynamicContactSection />
-      </Suspense>
+      </div>
     </main>
   );
 }
