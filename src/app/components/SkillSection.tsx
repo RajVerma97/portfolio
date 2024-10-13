@@ -3,8 +3,15 @@ import { Image } from "@nextui-org/react";
 import { motion } from "framer-motion"; // For smooth hover animations
 import { CursorContext } from "./CursorProvider";
 
+interface Skill {
+  name: string;
+  image: string;
+}
+
+type Skills = Skill[];
+
 // Skills data
-const skills = [
+const skills: Skills = [
   { name: "Next.js", image: "/nextjs.svg" },
   { name: "React Native", image: "/react-native.svg" },
   { name: "Nodejs", image: "/nodejs.svg" },
@@ -20,7 +27,7 @@ const skills = [
 ];
 
 // SkillCard component
-const SkillCard = ({ skill }) => {
+const SkillCard = ({ skill }: { skill: Skill }) => {
   return (
     <motion.div
       className="relative p-1 rounded-full shadow-lg cursor-pointer"
