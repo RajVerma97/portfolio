@@ -2,8 +2,6 @@
 
 import { useContext } from "react";
 import { CursorContext } from "./CursorProvider";
-import MusicCard from "./MusicCard";
-import { Youtube } from "lucide-react";
 import YouTubeMusicPlayer from "./YoutubeMusicPlayer";
 
 export default function MusicSection() {

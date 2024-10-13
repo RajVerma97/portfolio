@@ -66,7 +66,9 @@ export function NeonWave({
   return (
     <animated.mesh
       ref={meshRef}
+      // @ts-expect-error  ignore 
       position={position}
+      // @ts-expect-error  ignore
       scale={scale}
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
