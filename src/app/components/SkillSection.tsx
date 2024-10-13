@@ -29,13 +29,11 @@ const SkillCard = ({ skill }) => {
     >
       {/* Circular gradient border */}
       <div className="bg-gradient-to-r from-pink-500 to-orange-500 p-1 rounded-full">
-        <div className="bg-black rounded-full w-32 h-32 flex justify-center items-center">
+        <div className="bg-black rounded-full   w-20 h-20   md:w-24 md:h-24  flex justify-center items-center">
           <Image
             src={skill.image}
             alt={skill.name}
-            width={60}
-            height={60}
-            className="rounded-full"
+            className="rounded-full w-full  h-[3rem] "
           />
         </div>
       </div>
@@ -50,7 +48,7 @@ export default function SkillsSection() {
   const cursorState = useContext(CursorContext);
   const setCursorType = cursorState ? cursorState[1] : undefined; // Will be undefined if context is not provided
   return (
-    <div className="w-full min-h-screen flex flex-col justify-center items-center">
+    <div className="w-full flex flex-col justify-center items-center">
       <h1
         className="text-4xl lg:text-6xl font-semibold text-white mb-10"
         onPointerEnter={() => setCursorType?.("hovered")}
@@ -58,7 +56,7 @@ export default function SkillsSection() {
       >
         Skills
       </h1>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-12 px-6">
+      <div className="grid grid-cols-3  md:grid-cols-4 lg:grid-cols-6  gap-8 md:gap-12 ">
         {skills.map((skill, index) => (
           <SkillCard key={index} skill={skill} />
         ))}

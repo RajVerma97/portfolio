@@ -3,6 +3,8 @@
 import { useContext } from "react";
 import { CursorContext } from "./CursorProvider";
 import MusicCard from "./MusicCard";
+import { Youtube } from "lucide-react";
+import YouTubeMusicPlayer from "./YoutubeMusicPlayer";
 
 export default function MusicSection() {
   const cursorState = useContext(CursorContext);
@@ -12,51 +14,40 @@ export default function MusicSection() {
   const songs = [
     {
       title: "Perfect",
-      artist: "Ed Sheeran",
-      album: "÷",
-      image: "/perfect.png",
-      audio: "/perfect.mp3",
+      videoUrl: "https://www.youtube.com/watch?v=2Vv-BfVoq4g",
     },
     {
       title: "Sugar",
-      artist: "Maroon 5",
-      album: "Songs About Jane",
-      image: "/sugar.png",
-      audio: "/sugar.mp3",
+      videoUrl: "https://www.youtube.com/watch?v=09R8_2nJtjg",
     },
     {
       title: "Tu Hai Kahan",
-      artist: "Uraan",
-      album: "Tu Hai Kahan",
-      image: "/tu-hai-kahan.png",
-      audio: "/tu-hai-kahan.mp3",
+      videoUrl: "https://www.youtube.com/watch?v=AX6OrbgS8lI",
+    },
+    {
+      title: "We dont'talk anymore ",
+      videoUrl: "https://www.youtube.com/watch?v=3AtDnEC4zak",
     },
   ];
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center justify-center p-4 bg-black">
+    <div className="w-full  flex flex-col  p-4 bg-black">
       <div className="flex justify-center items-center gap-10 mb-8">
         <h1
           className="tracking-tight inline font-semibold text-4xl lg:text-6xl text-white"
           onPointerEnter={() => setCursorType?.("hovered")}
           onPointerLeave={() => setCursorType?.("default")}
         >
-          Music
+          Creative Soundtracks
         </h1>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl">
+      <div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 md:gap-12 max-w-6xl"
+        data-aos="fade-up"
+      >
         {songs.map((song, index) => {
-          return (
-            <MusicCard
-              key={index}
-              title={song.title}
-              artist={song.artist}
-              album={song.album}
-              image={song.image}
-              audioSrc={song.audio}
-            />
-          );
+          return <YouTubeMusicPlayer videoUrl={song.videoUrl} key={index} />;
         })}
       </div>
     </div>

@@ -2,6 +2,7 @@
 import * as THREE from "three";
 import { useRef, useState } from "react";
 import { animated, useSpring } from "@react-spring/three";
+import { useMediaQuery } from "react-responsive";
 
 export function NeonWave({
   color,
@@ -84,6 +85,7 @@ export function NeonWave({
 
 // NeonWaveContainer component to handle spawning multiple NeonWaves
 export function NeonWaveContainer() {
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const colors = [
     "#ff69b4",
     "#00ffff",
@@ -108,11 +110,12 @@ export function NeonWaveContainer() {
   return (
     <>
       {/* Spawning neon waves within the expanded boundary */}
-      {Array.from({ length: 8 }).map((_, index) => (
+      {Array.from({ length: isMobile ? 8 : 14 }).map((_, index) => (
+        // Generate a random color for each wave
         <NeonWave
           key={index}
           color={colors[index % colors.length]}
-          size={Math.random() * 0.16 + 0.06} // Size remains between 0.05 and 0.15
+          size={Math.random() * 0.2 + 0.05} // Size remains between 0.05 and 0.15
           boundary={boundary} // Pass the updated boundary
         />
       ))}
