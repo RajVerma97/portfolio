@@ -81,15 +81,15 @@ function ProjectCard({
       onPointerLeave={() => setCursorType?.("default")}
       data-aos="fade-up"
     >
-      <Card className="bg-white shadow-lg flex flex-col overflow-hidden p-4 md:p-0 border-1 border-gray-500 ">
+      <Card className="bg-black shadow-lg flex flex-col overflow-hidden p-4 md:p-0 border-1 rounded-md ">
         <CardBody className="overflow-hidden flex justify-center items-center">
           <Image
             alt={`${name} screenshot`}
             src={isMobile ? mobileImage : pcImage} // Use mobile image for small screens
-            className="object-cover w-full h-[20rem] rounded-md" // Ensure the image covers its container
+            className="object-cover w-full h-[20rem] rounded-md   p-0 md:p-6" // Ensure the image covers its container
           />
         </CardBody>
-        <CardHeader className="flex-col items-start p-4 md:p-6">
+        <CardHeader className="flex-col items-start p-2 md:p-6">
           <h4 className="text-lg font-semibold">{name}</h4>
           <p className="font-medium text-gray-400">{description}</p>
           <div className="mt-2 flex flex-wrap gap-4 ">
