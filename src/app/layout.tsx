@@ -25,9 +25,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Initialize AOS
   useEffect(() => {
-    initAOS(); // Initialize AOS
+    initAOS();
   }, []);
 
   return (
