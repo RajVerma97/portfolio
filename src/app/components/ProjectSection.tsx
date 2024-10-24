@@ -90,7 +90,7 @@ function ProjectCard({
           />
         </CardBody>
         <CardHeader className="flex-col items-start p-2 md:p-6">
-          <h4 className="text-lg font-semibold">{name}</h4>
+          <h4 className="text-lg font-semibold text-white">{name}</h4>
           <p className="font-medium text-gray-400">{description}</p>
           <div className="mt-2 flex flex-wrap gap-4 ">
             {tags.map((tag) => (
