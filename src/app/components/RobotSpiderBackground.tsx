@@ -4,7 +4,13 @@ import {
   Bloom,
   ToneMapping,
 } from "@react-three/postprocessing";
-import { useGLTF, Stage, Grid, OrbitControls } from "@react-three/drei";
+import {
+  useGLTF,
+  Stage,
+  Grid,
+  OrbitControls,
+  Environment,
+} from "@react-three/drei";
 import { useRef } from "react";
 import { useSpring } from "@react-spring/three";
 import * as THREE from "three";
@@ -104,7 +110,7 @@ const RobotSpiderBackground = () => {
           left: 0,
         }}
       >
-        <fog attach="fog" args={["black", 15, 22.5]} />
+        <fog attach="fog" args={["black", 10, 25]} />
         <Stage
           intensity={0.5}
           environment="city"
@@ -137,6 +143,13 @@ const RobotSpiderBackground = () => {
           <Bloom luminanceThreshold={2} mipmapBlur />
           <ToneMapping />
         </EffectComposer>
+        <Environment
+          background
+          preset="sunset"
+          blur={0.8}
+          backgroundIntensity={0.4}
+          backgroundRotation={[0, 10, 0]}
+        />
       </Canvas>
     </div>
   );
