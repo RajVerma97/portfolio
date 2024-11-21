@@ -26,15 +26,9 @@ const ExperienceSection = () => {
           }}
         >
           <h1 className="text-2xl text-amber-400 font-bold capitalize mb-3">
-            Full Stack Developer (MERN)
+            Full Stack Developer
           </h1>
-          <h3 className="text-xl font-medium text-gray-300 mb-1">
-            Prodios Labs
-          </h3>
-          <h3 className="text-lg font-light text-gray-400 mb-1">
-            Dehradun, Uttarakhand
-          </h3>
-          <h3 className="text-lg font-light text-gray-400">1 Year</h3>
+          <h3 className="text-lg font-light text-gray-400">2 Year</h3>
         </div>
         <div className="w-full">
           <RobotSpiderBackground />
