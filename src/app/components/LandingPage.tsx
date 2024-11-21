@@ -60,7 +60,7 @@ export default function LandingPage() {
             data-aos-offset="200"
             data-aos-delay="200"
           >
-            Full Software Developer
+            Full Stack Software Developer
           </h4>
           <Image
             src="/code-2.png"
