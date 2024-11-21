@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { NeonWaveContainer } from "./NeonWave"; // Import the NeonWaveContainer component
+import { NeonWaveContainer } from "./NeonWave"; 
 import { CursorContext } from "./CursorProvider";
 import { useContext } from "react";
 import Link from "next/link";
@@ -11,31 +11,31 @@ const socials = [
     name: "Github",
     image: "/github.svg",
     path: "https://github.com/RajVerma97",
-    bgColor: "bg-white", // Darker gray for a sleek look
+    bgColor: "bg-white", 
   },
   {
     name: "Twitter",
     image: "/twitter.svg",
     path: "https://x.com/RajVerma885633",
-    bgColor: "bg-blue-500", // Bright blue to stand out
+    bgColor: "bg-blue-500", 
   },
   {
     name: "LinkedIn",
     image: "/linkedin.svg",
     path: "https://www.linkedin.com/in/rajneesh-verma-026b141b7/",
-    bgColor: "bg-[#0077B5]", // LinkedIn blue
+    bgColor: "bg-[#0077B5]", 
   },
   {
     name: "Leetcode",
     image: "/leetcode.png",
     path: "https://leetcode.com/u/RajneeshVerma42/",
-    bgColor: "bg-[#F9C32B]", // LeetCode yellow for contrast
+    bgColor: "bg-[#F9C32B]", 
   },
 ];
 
 export default function LandingPage() {
   const cursorState = useContext(CursorContext);
-  const setCursorType = cursorState ? cursorState[1] : undefined; // Will be undefined if context is not provided
+  const setCursorType = cursorState ? cursorState[1] : undefined;
 
   return (
     <div className="relative w-full ">
@@ -69,7 +69,7 @@ export default function LandingPage() {
           />
         </div>
 
-        {/* Social Icons - Displayed above canvas for small screens */}
+        
         <div
           className="mt-4 flex md:hidden z-20 gap-4 mb-4"
           data-aos="fade-up"
@@ -100,7 +100,7 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* Canvas Container */}
+     
       <div className="w-full h-[25rem]    mt-8 z-10 ">
         <Canvas camera={{ position: [0, 0, 5] }}>
           <ambientLight intensity={0.5} />
@@ -109,7 +109,7 @@ export default function LandingPage() {
         </Canvas>
       </div>
 
-      {/* Social Icons Container for larger screens */}
+    
       <div
         className="hidden md:flex absolute top-[12rem]  transform flex-col gap-8 p-4 rounded-full shadow-md"
         data-aos="fade-up"
