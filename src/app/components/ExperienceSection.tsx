@@ -26,7 +26,7 @@ const ExperienceSection = () => {
           }}
         >
           <h1 className="text-2xl text-amber-400 font-bold capitalize mb-3">
-            Full Stack Developer
+             Full Stack Software Developer
           </h1>
           <h3 className="text-lg font-light text-gray-400">2 Year</h3>
         </div>
