@@ -93,22 +93,22 @@ function ProjectCard({
       onPointerLeave={() => setCursorType?.("default")}
       data-aos="fade-up"
     >
-      <Card className="bg-black shadow-lg flex flex-col overflow-hidden p-4 md:p-0 border-1 rounded-md ">
-        <CardBody className="overflow-hidden flex justify-center items-center p-6 ">
+      <Card className="bg-black shadow-lg flex flex-col overflow-hidden p-6  border-1 rounded-md ">
+        <CardBody className="overflow-hidden flex justify-center items-center ">
           <Image
             alt={`${name} screenshot`}
-            src={isMobile ? mobileImage : pcImage} // Use mobile image for small screens
-            className="object-fit w-full h-[20rem] rounded-md   p-0 " // Ensure the image covers its container
+            src={isMobile ? mobileImage : pcImage}
+            className="object-fit w-full  h-[25rem] rounded-md   p-0 "
           />
         </CardBody>
-        <CardHeader className="flex-col items-start p-2 md:p-6">
+        <CardHeader className="flex-col items-start p-2 md:py-6 mt-4 md:mt-0">
           <h4 className="text-lg font-semibold text-white">{name}</h4>
-          <p className="font-medium text-gray-400">{description}</p>
-          <div className="mt-3 flex flex-wrap gap-4 ">
+          <p className="font-medium mt-1 text-gray-400">{description}</p>
+          <div className="mt-3 flex flex-wrap gap-6 ">
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="bg-gray-200 text-gray-800 text-sm font-medium px-2 py-2 rounded-full"
+                className="bg-gray-200 text-gray-800 text-sm font-medium px-2 py-2 md:px-4 md:py-2 rounded-full"
               >
                 {tag}
               </span>
