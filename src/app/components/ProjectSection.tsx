@@ -54,7 +54,7 @@ const projects: Projects = [
     mobileImage: "/thunder-chat.jpg",
     pcImage: "/thunder-chat.jpg",
     path: "#",
-    tags: ["React Native", "Firebase", "Redux"],
+    tags: ["React Native", "Firebase", "Redux","Postresql"],
   },
 
   {
@@ -63,7 +63,7 @@ const projects: Projects = [
     mobileImage: "/movie-zone.png",
     pcImage: "/movie-zone-pc.png",
     path: "https://moviezone97.netlify.app/",
-    tags: ["React", "Firebase"],
+    tags: ["React", "Firebase","Prisma"],
   },
 ];
 
@@ -93,18 +93,18 @@ function ProjectCard({
       onPointerLeave={() => setCursorType?.("default")}
       data-aos="fade-up"
     >
-      <Card className="bg-black shadow-lg flex flex-col overflow-hidden p-6  border-1 rounded-md ">
+      <Card className="bg-black shadow-lg flex flex-col overflow-hidden  p-8  md:p-6  border-1 rounded-md ">
         <CardBody className="overflow-hidden flex justify-center items-center ">
           <Image
             alt={`${name} screenshot`}
             src={isMobile ? mobileImage : pcImage}
-            className="object-fit w-full  h-[25rem] rounded-md   p-0 "
+            className="object-fit w-full h-[30rem]  md:h-[18rem]  rounded-md   p-0 "
           />
         </CardBody>
-        <CardHeader className="flex-col items-start p-2 md:py-6 mt-4 md:mt-0">
+        <CardHeader className="flex-col items-start  md:py-6 mt-4 md:mt-0">
           <h4 className="text-lg font-semibold text-white">{name}</h4>
           <p className="font-medium mt-1 text-gray-400">{description}</p>
-          <div className="mt-3 flex flex-wrap gap-6 ">
+          <div className="mt-3 flex flex-wrap gap-4 ">
             {tags.map((tag) => (
               <span
                 key={tag}
