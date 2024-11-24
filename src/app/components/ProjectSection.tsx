@@ -37,6 +37,26 @@ const projects: Projects = [
     path: "https://pleasurefashion.up.railway.app/",
     tags: ["Node.js", "Express", "MongoDB"],
   },
+
+  {
+    name: "Positive Mindcare App",
+    description:
+      "A comprehensive mental wellness application designed to empower users in managing their emotional health through engaging features. ",
+    mobileImage: "positive-mindcare.jpg",
+    pcImage: "positive-mindcare.jpg",
+    path: "#",
+    tags: ["React Native", "Typescript", "Firebase", "Zustand", "Native Base"],
+  },
+
+  {
+    name: "Thunder Chat App",
+    description: "A real-time chat application with sleek and modern design.",
+    mobileImage: "/thunder-chat.jpg",
+    pcImage: "/thunder-chat.jpg",
+    path: "#",
+    tags: ["React Native", "Firebase", "Redux"],
+  },
+
   {
     name: "Movie Zone",
     description: " Stream movies online with a sleek and responsive interface.",
@@ -44,14 +64,6 @@ const projects: Projects = [
     pcImage: "/movie-zone-pc.png",
     path: "https://moviezone97.netlify.app/",
     tags: ["React", "Firebase"],
-  },
-  {
-    name: "Thunder Chat App",
-    description: "A real-time chat application with sleek and modern design.",
-    mobileImage: "/thunder-chat.jpg",
-    pcImage: "/thunder-chat.jpg",
-    path: "#",
-    tags: ["React Native", "Firebase"],
   },
 ];
 
@@ -82,17 +94,17 @@ function ProjectCard({
       data-aos="fade-up"
     >
       <Card className="bg-black shadow-lg flex flex-col overflow-hidden p-4 md:p-0 border-1 rounded-md ">
-        <CardBody className="overflow-hidden flex justify-center items-center">
+        <CardBody className="overflow-hidden flex justify-center items-center p-6 ">
           <Image
             alt={`${name} screenshot`}
             src={isMobile ? mobileImage : pcImage} // Use mobile image for small screens
-            className="object-cover w-full h-[20rem] rounded-md   p-0 md:p-6" // Ensure the image covers its container
+            className="object-fit w-full h-[20rem] rounded-md   p-0 " // Ensure the image covers its container
           />
         </CardBody>
         <CardHeader className="flex-col items-start p-2 md:p-6">
           <h4 className="text-lg font-semibold text-white">{name}</h4>
           <p className="font-medium text-gray-400">{description}</p>
-          <div className="mt-2 flex flex-wrap gap-4 ">
+          <div className="mt-3 flex flex-wrap gap-4 ">
             {tags.map((tag) => (
               <span
                 key={tag}
