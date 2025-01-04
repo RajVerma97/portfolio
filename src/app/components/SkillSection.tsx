@@ -15,6 +15,7 @@ const skills: Skills = [
   { name: "Next.js", image: "/nextjs.svg" },
   { name: "React Native", image: "/react-native.svg" },
   { name: "Nodejs", image: "/nodejs.svg" },
+  { name: "Golang", image: "/golang.svg" },
   { name: "React", image: "/react.svg" },
   { name: "TypeScript", image: "/typescript.svg" },
   { name: "Firebase", image: "/firebase.svg" },
