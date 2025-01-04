@@ -54,7 +54,7 @@ const projects: Projects = [
     mobileImage: "/thunder-chat.jpg",
     pcImage: "/thunder-chat.jpg",
     path: "#",
-    tags: ["React Native", "Firebase", "Redux","Postresql"],
+    tags: ["React Native", "Firebase", "Redux", "Postresql"],
   },
 
   {
@@ -63,7 +63,7 @@ const projects: Projects = [
     mobileImage: "/movie-zone.png",
     pcImage: "/movie-zone-pc.png",
     path: "https://moviezone97.netlify.app/",
-    tags: ["React", "Firebase","Prisma"],
+    tags: ["React", "Golang"],
   },
 ];
 
