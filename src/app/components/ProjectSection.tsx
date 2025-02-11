@@ -26,7 +26,15 @@ const projects: Projects = [
     mobileImage: "/stock-glimpse.png",
     pcImage: "/stock-glimpse-pc.png",
     path: "https://stock-glimpse.vercel.app/",
-    tags: ["Next.js", "MongoDB", "TypeScript"],
+    // tags: ["Next.js", "MongoDB", "TypeScript"],
+    tags: [
+      "Golang",
+      "React.js",
+      "MongoDB",
+      "TypeScript",
+      "Prometheus",
+      "Grafana",
+    ],
   },
 
   {
@@ -35,18 +43,19 @@ const projects: Projects = [
     mobileImage: "/pleasure-fashion.png",
     pcImage: "/pleasure-fashion-pc.png",
     path: "https://pleasurefashion.up.railway.app/",
-    tags: ["Node.js", "Express", "MongoDB"],
+    // tags: ["Node.js", "Express", "MongoDB"],
+    tags: ["Golang", "Docker", "React"],
   },
 
-  {
-    name: "Positive Mindcare App",
-    description:
-      "A comprehensive mental wellness application designed to empower users in managing their emotional health through engaging features. ",
-    mobileImage: "positive-mindcare.jpg",
-    pcImage: "positive-mindcare.jpg",
-    path: "#",
-    tags: ["React Native", "Typescript", "Firebase", "Zustand", "Native Base"],
-  },
+  // {
+  //   name: "Positive Mindcare App",
+  //   description:
+  //     "A comprehensive mental wellness application designed to empower users in managing their emotional health through engaging features. ",
+  //   mobileImage: "positive-mindcare.jpg",
+  //   pcImage: "positive-mindcare.jpg",
+  //   path: "#",
+  //   tags: ["React Native", "Typescript", "Firebase", "Zustand", "Native Base"],
+  // },
 
   {
     name: "Thunder Chat App",
@@ -54,7 +63,8 @@ const projects: Projects = [
     mobileImage: "/thunder-chat.jpg",
     pcImage: "/thunder-chat.jpg",
     path: "#",
-    tags: ["React Native", "Firebase", "Redux", "Postresql"],
+    // tags: ["React Native", "Firebase", "Redux", "Postresql"],
+    tags: ["Golang", "Rabbitmq", "React Native", "Redux", "Postresql"],
   },
 
   {

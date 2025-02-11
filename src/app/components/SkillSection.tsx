@@ -12,19 +12,25 @@ type Skills = Skill[];
 
 // Skills data
 const skills: Skills = [
-  { name: "Next.js", image: "/nextjs.svg" },
-  { name: "React Native", image: "/react-native.svg" },
-  { name: "Nodejs", image: "/nodejs.svg" },
+  // { name: "Next.js", image: "/nextjs.svg" },
+  // { name: "React Native", image: "/react-native.svg" },
   { name: "Golang", image: "/golang.svg" },
-  { name: "React", image: "/react.svg" },
-  { name: "TypeScript", image: "/typescript.svg" },
-  { name: "Firebase", image: "/firebase.svg" },
-  { name: "JavaScript", image: "/javascript.svg" },
-  { name: "MongoDB", image: "/mongodb.png" },
+  { name: "Prometheus", image: "/prometheus.svg" },
+  { name: "Grafana", image: "/grafana.svg" },
+  { name: "Kafka", image: "/kafka.svg" },
+  { name: "RabbitMq", image: "/rabbitmq.svg" },
   { name: "Docker", image: "/docker.svg" },
+  { name: "Kubernetes", image: "/kubernetes.svg" },
   { name: "Git", image: "/git.svg" },
   { name: "AWS", image: "/aws.svg" },
-  { name: "Redux", image: "/redux.png" },
+  { name: "Nodejs", image: "/nodejs.svg" },
+  { name: "React", image: "/react.svg" },
+  // { name: "TypeScript", image: "/typescript.svg" },
+  // { name: "Firebase", image: "/firebase.svg" },
+  // { name: "JavaScript", image: "/javascript.svg" },
+  { name: "MongoDB", image: "/mongodb.png" },
+
+  // { name: "Redux", image: "/redux.png" },
 ];
 
 // SkillCard component
